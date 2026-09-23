@@ -1,0 +1,622 @@
+// ============================================
+// VARIABLES
+// ============================================
+
+$bg-color: #fcfbf9;
+$white: #ffffff;
+$text-color: #1a1a1a;
+$accent-color: #a35d38;
+$accent-dark: #7e4325;
+$dark-green: #23312b;
+$light-beige: #f1ebd8;
+$gray: #666666;
+$border-color: #e5dfd3;
+$shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+$container-width: 1200px;
+
+
+// ============================================
+// MIXINS
+// ============================================
+
+@mixin tablet {
+    @media (max-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: 600px) {
+        @content;
+    }
+}
+
+
+// ============================================
+// RESET & GLOBAL STYLES
+// ============================================
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: $text-color;
+    background: $bg-color;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+button {
+    font-family: inherit;
+}
+
+.container {
+    width: 90%;
+    max-width: $container-width;
+    margin: 0 auto;
+}
+
+
+// ============================================
+// HEADER & BURGER MENU
+// ============================================
+
+.header {
+    background: rgba($bg-color, 0.95);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid $border-color;
+
+    &__container {
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    &__logo {
+        color: $text-color;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: 2px;
+
+        span {
+            color: $accent-color;
+        }
+    }
+
+    &__burger-toggle {
+        display: none;
+    }
+
+    &__burger-btn {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 28px;
+        height: 20px;
+        cursor: pointer;
+        z-index: 101;
+
+        span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: $text-color;
+            border-radius: 2px;
+            transition: 0.3s ease;
+        }
+
+        @include mobile {
+            display: flex;
+        }
+    }
+
+    &__nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        @include tablet {
+            gap: 20px;
+        }
+
+        @include mobile {
+            position: absolute;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: $bg-color;
+            flex-direction: column;
+            padding: 25px 0;
+            border-bottom: 1px solid $border-color;
+            box-shadow: $shadow;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: 0.3s ease;
+        }
+    }
+
+    &__link {
+        color: $text-color;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.3s;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+
+    &__burger-toggle:checked ~ &__nav {
+        @include mobile {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+
+    &__burger-toggle:checked + &__burger-btn {
+        span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        span:nth-child(2) {
+            opacity: 0;
+        }
+        span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+    }
+}
+
+
+// ============================================
+// HERO
+// ============================================
+
+.hero {
+    padding: 80px 0;
+
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+
+        @include mobile {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px 0;
+        }
+    }
+
+    &__content {
+        max-width: 580px;
+    }
+
+    &__label {
+        color: $accent-color;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+    }
+
+    &__title {
+        font-family: Georgia, serif;
+        font-size: clamp(42px, 5.5vw, 64px);
+        line-height: 1.1;
+        margin-bottom: 20px;
+
+        span {
+            color: $accent-color;
+            font-style: italic;
+        }
+    }
+
+    &__description {
+        color: $gray;
+        font-size: 16px;
+        margin-bottom: 35px;
+    }
+
+    &__button {
+        display: inline-block;
+        padding: 16px 32px;
+        background: $accent-color;
+        color: $white;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 4px;
+        box-shadow: 0 5px 15px rgba($accent-color, 0.3);
+        transition: 0.3s ease;
+
+        &:hover {
+            background: $accent-dark;
+            transform: translateY(-2px);
+        }
+    }
+
+    &__books {
+        width: 380px;
+        height: 380px;
+        position: relative;
+        flex-shrink: 0;
+
+        @include tablet {
+            transform: scale(0.85);
+        }
+
+        @include mobile {
+            transform: scale(0.75);
+            margin-top: -20px;
+        }
+    }
+
+    &__book {
+        position: absolute;
+        width: 170px;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: $white;
+        font-family: Georgia, serif;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 6px;
+        box-shadow: $shadow;
+
+        &--brown {
+            background: linear-gradient(135deg, $accent-color, $accent-dark);
+            left: 10px;
+            top: 80px;
+            transform: rotate(-10deg);
+        }
+
+        &--green {
+            background: linear-gradient(135deg, #3d5248, $dark-green);
+            right: 10px;
+            top: 30px;
+            transform: rotate(10deg);
+        }
+
+        &--beige {
+            background: linear-gradient(135deg, #d8b683, #b8935c);
+            left: 105px;
+            top: 120px;
+            transform: rotate(2deg);
+        }
+    }
+}
+
+
+// ============================================
+// SECTION HEADING
+// ============================================
+
+.section-heading {
+    margin-bottom: 45px;
+
+    &__label {
+        color: $accent-color;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        margin-bottom: 10px;
+    }
+
+    &__title {
+        font-family: Georgia, serif;
+        font-size: clamp(32px, 4vw, 44px);
+        line-height: 1.2;
+    }
+
+    &__description {
+        color: $gray;
+        margin-top: 10px;
+    }
+}
+
+
+// ============================================
+// BOOKS GRID & CARD
+// ============================================
+
+.books {
+    padding: 90px 0;
+    background: $white;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+
+        @include tablet {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.book-card {
+    background: $bg-color;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: 0.3s ease;
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: $shadow;
+    }
+
+    &__cover {
+        height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+        font-family: Georgia, serif;
+        font-size: 26px;
+        font-weight: bold;
+        text-align: center;
+
+        &--brown { background: linear-gradient(135deg, #aa6843, $accent-dark); }
+        &--green { background: linear-gradient(135deg, #4d6357, $dark-green); }
+        &--gray { background: linear-gradient(135deg, #59636e, #33383f); }
+        &--gold { background: linear-gradient(135deg, #c79a6b, #966c3f); }
+    }
+
+    &__info {
+        padding: 24px;
+    }
+
+    &__title {
+        font-family: Georgia, serif;
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    &__author {
+        color: $gray;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    &__bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__price {
+        font-size: 18px;
+        color: $text-color;
+    }
+
+    &__button {
+        border: none;
+        background: $text-color;
+        color: $white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.3s ease;
+
+        &:hover {
+            background: $accent-color;
+        }
+    }
+}
+
+
+// ============================================
+// GENRES
+// ============================================
+
+.genres {
+    padding: 90px 0;
+    background: $dark-green;
+    color: $white;
+
+    .section-heading__label { color: #d1b181; }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+
+        @include tablet {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.genre {
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    transition: 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: #d1b181;
+    }
+
+    &__number {
+        color: #d1b181;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    &__title {
+        font-family: Georgia, serif;
+        font-size: 22px;
+        margin: 15px 0 10px;
+    }
+
+    &__description {
+        color: #bbbbbb;
+        font-size: 14px;
+    }
+}
+
+
+// ============================================
+// CLUB & CONTACTS
+// ============================================
+
+.club {
+    padding: 100px 0;
+    background: $light-beige;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 40px;
+
+        @include mobile {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    &__label {
+        color: $accent-color;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 3px;
+    }
+
+    &__title {
+        font-family: Georgia, serif;
+        font-size: clamp(38px, 5vw, 52px);
+        line-height: 1.1;
+        margin: 15px 0;
+    }
+
+    &__description {
+        color: $gray;
+        max-width: 500px;
+        margin-bottom: 30px;
+    }
+
+    &__button {
+        display: inline-block;
+        background: $accent-color;
+        color: $white;
+        text-decoration: none;
+        padding: 15px 30px;
+        border-radius: 4px;
+        transition: 0.3s ease;
+
+        &:hover { background: $accent-dark; }
+    }
+
+    &__number-value {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 60px;
+        color: $accent-color;
+        line-height: 1;
+    }
+
+    &__number-text {
+        color: $gray;
+    }
+}
+
+.contacts {
+    padding: 90px 0;
+    background: $white;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+
+        @include tablet {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.contact {
+    padding: 30px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+
+    &__title {
+        font-family: Georgia, serif;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    &__text {
+        color: $gray;
+    }
+}
+
+
+// ============================================
+// FOOTER
+// ============================================
+
+.footer {
+    background: $text-color;
+    color: $white;
+    padding: 35px 0;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include mobile {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+    }
+
+    &__logo {
+        font-size: 22px;
+        font-weight: bold;
+
+        span { color: $accent-color; }
+    }
+
+    &__text {
+        color: #888888;
+        font-size: 14px;
+    }
+}
